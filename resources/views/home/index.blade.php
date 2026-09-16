@@ -2,72 +2,81 @@
 @section('title', 'Home')
 
 @section('content')
-    <h1 class="text-2xl font-bold mb-1">Selamat datang, {{ auth()->user()->name }}!</h1>
-    <p class="text-gray-600 mb-6">Role: {{ auth()->user()->role }}</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4">
+            <div class="w-12 h-12 bg-teal-100 text-teal-600 rounded-xl flex items-center justify-center text-xl">
+                <i class="fa-solid fa-box"></i>
+            </div>
+            <div>
+                <p class="text-sm text-slate-500">Total Item</p>
+                <p class="text-2xl font-bold text-slate-800">{{ $totalItems }}</p>
+            </div>
+        </div>
 
-    {{-- Card ringkasan --}}
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        <div class="bg-blue-600 text-white p-6 rounded-lg shadow">
-            <p class="text-sm opacity-80">Total Item</p>
-            <p class="text-3xl font-bold">{{ $totalItems }}</p>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4">
+            <div class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center text-xl">
+                <i class="fa-solid fa-tags"></i>
+            </div>
+            <div>
+                <p class="text-sm text-slate-500">Total Kategori</p>
+                <p class="text-2xl font-bold text-slate-800">{{ $totalCategories }}</p>
+            </div>
         </div>
-        <div class="bg-green-600 text-white p-6 rounded-lg shadow">
-            <p class="text-sm opacity-80">Total Kategori</p>
-            <p class="text-3xl font-bold">{{ $totalCategories }}</p>
-        </div>
-        <div class="bg-purple-600 text-white p-6 rounded-lg shadow">
-            <p class="text-sm opacity-80">Total Nilai Aset</p>
-            <p class="text-3xl font-bold">Rp {{ number_format($totalAssetValue, 0, ',', '.') }}</p>
+
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4">
+            <div class="w-12 h-12 bg-teal-100 text-teal-600 rounded-xl flex items-center justify-center text-xl">
+                <i class="fa-solid fa-sack-dollar"></i>
+            </div>
+            <div>
+                <p class="text-sm text-slate-500">Total Nilai Aset</p>
+                <p class="text-2xl font-bold text-slate-800">Rp {{ number_format($totalAssetValue, 0, ',', '.') }}</p>
+            </div>
         </div>
     </div>
 
-    {{-- Chart bar: stok per kategori --}}
-    <div class="bg-white p-6 rounded-lg shadow mb-8">
-        <h2 class="text-lg font-semibold mb-4">Stok per Kategori</h2>
-        <canvas id="stockChart" height="100"></canvas>
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 mb-8">
+        <h2 class="font-semibold text-slate-700 mb-4">Stok per Kategori</h2>
+        <canvas id="stockChart" height="90"></canvas>
     </div>
 
-    {{-- Tabel rincian --}}
-    <div class="bg-white rounded-lg shadow overflow-hidden">
-        <table class="w-full">
-            <thead class="bg-gray-200">
+    {{-- <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <table class="w-full text-sm">
+            <thead class="bg-slate-50 text-slate-500 text-left">
                 <tr>
-                    <th class="p-3 text-left">Kategori</th>
-                    <th class="p-3 text-left">Total Stok</th>
+                    <th class="p-4 font-medium">Kategori</th>
+                    <th class="p-4 font-medium">Total Stok</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="divide-y divide-slate-100">
                 @forelse ($stockPerCategory as $category)
-                    <tr class="border-t">
-                        <td class="p-3">{{ $category->category_name }}</td>
-                        <td class="p-3">{{ $category->items_sum_stock ?? 0 }}</td>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-4 text-slate-700">{{ $category->category_name }}</td>
+                        <td class="p-4 text-slate-700">{{ $category->items_sum_stock ?? 0 }}</td>
                     </tr>
                 @empty
-                    <tr>
-                        <td colspan="2" class="p-3 text-center text-gray-500">Belum ada data.</td>
-                    </tr>
+                    <tr><td colspan="2" class="p-4 text-center text-slate-400">Belum ada data.</td></tr>
                 @endforelse
             </tbody>
         </table>
-    </div>
+    </div> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const ctx = document.getElementById('stockChart');
-
-        new Chart(ctx, {
+        new Chart(document.getElementById('stockChart'), {
             type: 'bar',
             data: {
                 labels: {!! json_encode($stockPerCategory->pluck('category_name')) !!},
                 datasets: [{
                     label: 'Total Stok',
                     data: {!! json_encode($stockPerCategory->pluck('items_sum_stock')) !!},
-                    backgroundColor: '#2563eb',
+                    backgroundColor: '#367588',
+                    borderRadius: 6,
                 }]
             },
             options: {
                 responsive: true,
-                plugins: { legend: { display: false } }
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
             }
         });
     </script>

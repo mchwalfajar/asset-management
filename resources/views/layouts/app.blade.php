@@ -2,37 +2,44 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Asset Management')</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body class="bg-gray-100">
+<body class="bg-slate-100">
     <div class="flex min-h-screen">
-        <aside class="w-56 bg-gray-800 text-white p-4">
-            <h2 class="text-lg font-bold mb-6">Asset Mgmt</h2>
-            <nav class="space-y-2">
-                <a href="{{ route('home') }}" class="block hover:bg-gray-700 p-2 rounded">Home</a>
-                <a href="{{ route('category.index') }}" class="block hover:bg-gray-700 p-2 rounded">Category</a>
-                <a href="{{ route('item.index') }}" class="block hover:bg-gray-700 p-2 rounded">Item</a>
-                @if (auth()->user()->role === 'admin')
-                    <a href="{{ route('user.index') }}" class="block hover:bg-gray-700 p-2 rounded">User Management</a>
+        @include('partials.sidebar')
+
+        <div class="flex-1 flex flex-col">
+            {{-- Header --}}
+            <header class="bg-white border-b border-slate-200 px-8 py-4 flex justify-between items-center">
+                <h1 class="text-lg font-semibold text-slate-700">@yield('title', 'Dashboard')</h1>
+                <div class="flex items-center gap-3">
+                    <span class="text-sm text-slate-500">{{ auth()->user()->name }}</span>
+                    <span class="text-xs px-2 py-1 rounded-full font-medium
+                        {{ auth()->user()->role === 'admin' ? 'bg-purple-100 text-purple-700' : 'bg-slate-200 text-slate-600' }}">
+                        {{ ucfirst(auth()->user()->role) }}
+                    </span>
+                </div>
+            </header>
+
+            {{-- Content --}}
+            <main class="flex-1 p-8">
+                @if (session('success'))
+                    <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
+                    </div>
                 @endif
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button class="block w-full text-left hover:bg-gray-700 p-2 rounded">Logout</button>
-                </form>
-            </nav>
-        </aside>
+                @if (session('error'))
+                    <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-exclamation"></i> {{ session('error') }}
+                    </div>
+                @endif
 
-        <main class="flex-1 p-8">
-            @if (session('success'))
-                <div class="bg-green-100 text-green-700 p-3 rounded mb-4">{{ session('success') }}</div>
-            @endif
-            @if (session('error'))
-                <div class="bg-red-100 text-red-700 p-3 rounded mb-4">{{ session('error') }}</div>
-            @endif
-
-            @yield('content')
-        </main>
+                @yield('content')
+            </main>
+        </div>
     </div>
 </body>
 </html>
