@@ -21,3 +21,5 @@
         <a href="{{ route('category.index') }}" class="ml-2 text-gray-600">Batal</a>
     </form>
 @endsection
+
+<i class="fa-brands fa-confluence"></i>
