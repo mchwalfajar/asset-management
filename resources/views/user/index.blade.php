@@ -17,7 +17,7 @@
                     <th class="p-4 font-medium">Nama</th>
                     <th class="p-4 font-medium">Username</th>
                     <th class="p-4 font-medium">Role</th>
-                    <th class="p-4 font-medium">Aksi</th>
+                    <th class="p-4 font-medium"></th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-100">

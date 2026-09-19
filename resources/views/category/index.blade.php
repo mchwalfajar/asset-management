@@ -20,7 +20,7 @@
                     <th class="p-4 font-medium">Deskripsi</th>
                     <th class="p-4 font-medium">Jumlah Item</th>
                     @if (auth()->user()->role === 'admin')
-                        <th class="p-4 font-medium">Aksi</th>
+                        <th class="p-4 font-medium"></th>
                     @endif
                 </tr>
             </thead>
