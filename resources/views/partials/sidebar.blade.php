@@ -1,4 +1,4 @@
-<aside class="w-64 bg-slate-900 text-slate-300 flex flex-col">
+<aside class="w-64 bg-slate-950 text-slate-300 flex flex-col">
     <div class="px-6 py-5 border-b border-slate-800">
         <h2 class="text-white font-bold text-lg flex items-center gap-2">
             <i class="fa-brands fa-confluence text-blue-400"></i> Asset Management

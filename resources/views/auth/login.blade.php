@@ -7,14 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body class="bg-slate-900 flex items-center justify-center min-h-screen px-4">
+<body class="bg-teal-700 flex items-center justify-center min-h-screen px-4">
     <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-sm">
         <div class="text-center mb-8">
-            <div class="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3">
-                <i class="fa-solid fa-boxes-stacked text-white text-2xl"></i>
+            <div class="w-14 h-14 bg-teal-600 rounded-xl flex items-center justify-center mx-auto mb-3">
+                <i class="fa-brands fa-confluence text-white text-2xl"></i>
             </div>
             <h1 class="text-xl font-bold text-slate-800">Asset Management</h1>
-            <p class="text-sm text-slate-500">Masuk untuk melanjutkan</p>
         </div>
 
         @if ($errors->any())
@@ -44,7 +43,7 @@
                 </div>
             </div>
             <button type="submit"
-                    class="w-full bg-blue-600 text-white py-2.5 rounded-lg font-medium hover:bg-blue-700 transition">
+                    class="w-full bg-teal-600 text-white py-2.5 rounded-lg font-medium hover:bg-teal-700 transition">
                 Login
             </button>
         </form>
