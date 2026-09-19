@@ -9,11 +9,21 @@ use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $items = Item::with('category')->latest()->paginate(7);
+        $items = Item::with('category')
+        ->when($request->filled('search'), function ($query) use ($request) {
+            $query->where('item_name', 'like', '%' . $request->search . '%');
+        })
+        ->when($request->filled('category_id'), function ($query) use ($request) {
+            $query->where('category_id', $request->category_id);
+        })
+        ->latest()
+        ->paginate(7)
+        ->withQueryString();
 
-        return view('item.index', compact('items'));
+        $categories = Category::all();
+        return view('item.index', compact('items', 'categories'));
     }
 
     public function create()
