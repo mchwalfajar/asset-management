@@ -21,7 +21,7 @@
         <a href="{{ route('item.index') }}"
            class="flex items-center gap-3 px-3 py-2 rounded-lg transition
                   {{ request()->routeIs('item.*') ? 'bg-teal-600 text-white' : 'hover:bg-slate-800 hover:text-white' }}">
-            <i class="fa-solid fa-box w-4"></i> Item
+            <i class="fa-solid fa-box w-4"></i> Asset Items
         </a>
 
         @if (auth()->user()->role === 'admin')

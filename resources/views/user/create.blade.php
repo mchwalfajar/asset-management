@@ -2,38 +2,49 @@
 @section('title', 'Tambah User')
 
 @section('content')
-    <h1 class="text-2xl font-bold mb-6">Tambah User</h1>
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 max-w-lg">
+        <form method="POST" action="{{ route('user.store') }}">
+            @csrf
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-slate-700 mb-1.5">Nama Lengkap</label>
+                <input type="text" name="name" value="{{ old('name') }}"
+                       class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                @error('name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+            </div>
 
-    <form method="POST" action="{{ route('user.store') }}" class="bg-white p-6 rounded shadow max-w-lg">
-        @csrf
-        <div class="mb-4">
-            <label class="block font-medium mb-1">Nama Lengkap</label>
-            <input type="text" name="name" value="{{ old('name') }}" class="w-full border rounded px-3 py-2">
-            @error('name') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
-        </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-slate-700 mb-1.5">Username</label>
+                <input type="text" name="username" value="{{ old('username') }}"
+                       class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                @error('username') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+            </div>
 
-        <div class="mb-4">
-            <label class="block font-medium mb-1">Username</label>
-            <input type="text" name="username" value="{{ old('username') }}" class="w-full border rounded px-3 py-2">
-            @error('username') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
-        </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-slate-700 mb-1.5">Password</label>
+                <input type="password" name="password"
+                       class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                @error('password') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+            </div>
 
-        <div class="mb-4">
-            <label class="block font-medium mb-1">Password</label>
-            <input type="password" name="password" class="w-full border rounded px-3 py-2">
-            @error('password') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
-        </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-slate-700 mb-1.5">Role</label>
+                <select name="role"
+                        class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <option value="staff" {{ old('role') === 'staff' ? 'selected' : '' }}>Staff</option>
+                    <option value="admin" {{ old('role') === 'admin' ? 'selected' : '' }}>Admin</option>
+                </select>
+                @error('role') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+            </div>
 
-        <div class="mb-6">
-            <label class="block font-medium mb-1">Role</label>
-            <select name="role" class="w-full border rounded px-3 py-2">
-                <option value="staff" {{ old('role') === 'staff' ? 'selected' : '' }}>Staff</option>
-                <option value="admin" {{ old('role') === 'admin' ? 'selected' : '' }}>Admin</option>
-            </select>
-            @error('role') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
-        </div>
-
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Simpan</button>
-        <a href="{{ route('user.index') }}" class="ml-2 text-gray-600">Batal</a>
-    </form>
+            <div class="flex gap-3">
+                <button type="submit" class="bg-teal-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-teal-700">
+                    Simpan
+                </button>
+                <a href="{{ route('user.index') }}"
+                   class="px-5 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">
+                    Batal
+                </a>
+            </div>
+        </form>
+    </div>
 @endsection

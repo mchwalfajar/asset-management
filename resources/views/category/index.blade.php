@@ -6,7 +6,7 @@
         <p class="text-slate-500 text-sm">Kelola kategori barang</p>
         @if (auth()->user()->role === 'admin')
             <a href="{{ route('category.create') }}"
-               class="bg-teal-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 flex items-center gap-2">
+               class="bg-teal-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-teal-700 flex items-center gap-2">
                 <i class="fa-solid fa-plus"></i> Tambah Kategori
             </a>
         @endif
@@ -14,7 +14,7 @@
 
     <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
         <table class="w-full text-sm">
-            <thead class="bg-slate-50 text-slate-500 text-left">
+            <thead class="bg-slate-50 text-slate-500     text-left">
                 <tr>
                     <th class="p-4 font-medium">Nama Kategori</th>
                     <th class="p-4 font-medium">Deskripsi</th>
@@ -63,5 +63,8 @@
                 @endforelse
             </tbody>
         </table>
+        <div class="px-4 py-3 border-t border-slate-100">
+            {{ $categories->links() }}
+        </div>
     </div>
 @endsection

@@ -11,7 +11,7 @@ class ItemController extends Controller
 {
     public function index()
     {
-        $items = Item::with('category')->latest()->get();
+        $items = Item::with('category')->latest()->paginate(7);
 
         return view('item.index', compact('items'));
     }
