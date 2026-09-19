@@ -69,7 +69,12 @@
                 datasets: [{
                     label: 'Total Stok',
                     data: {!! json_encode($stockPerCategory->pluck('items_sum_stock')) !!},
-                    backgroundColor: '#367588',
+                    backgroundColor: [
+                        '#367588',
+                        '#4A90E2',
+                        '#50E3C2',
+                        '#F5A623',
+                    ],
                     borderRadius: 6,
                 }]
             },
