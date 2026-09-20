@@ -50,6 +50,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('user', UserController::class)->except(['show']);
 });
 
+
+// Testing response
+Route::get('/test', function () {
+    return \App\Models\Item::where('image', '!=', null)->get();
+});
+
 // Route::middleware(['auth', 'role:admin'])->group(function () {
 //     Route::get('/test-admin-only', function () {
 //         return 'Halaman ini khusus admin!';

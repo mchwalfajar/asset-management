@@ -47,17 +47,35 @@
         <table class="w-full text-sm">
             <thead class="bg-slate-50 text-slate-500 text-left">
                 <tr>
-                    <th class="p-4 font-medium">Gambar</th>
-                    <th class="p-4 font-medium">Nama Item</th>
-                    <th class="p-4 font-medium">Kategori</th>
-                    <th class="p-4 font-medium">Stok</th>
-                    <th class="p-4 font-medium">Harga</th>
-                    <th class="p-4 font-medium"></th>
+                    <th class="p-4 font-medium">Action</th>
+                    <th class="p-4 font-medium">Image</th>
+                    <th class="p-4 font-medium">Item Name</th>
+                    <th class="p-4 font-medium">Category</th>
+                    <th class="p-4 font-medium">Stock</th>
+                    <th class="p-4 font-medium">Price</th>
+                    <th class="p-4 font-medium">Updated by</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-100">
                 @forelse ($items as $item)
                     <tr class="hover:bg-slate-50">
+                        <td class="p-4">
+                            <div class="flex items-center gap-3">
+                                <a href="{{ route('item.edit', $item) }}"
+                                   class="text-amber-500 hover:text-amber-600" title="Edit">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <form method="POST" action="{{ route('item.destroy', $item) }}"
+                                      onsubmit="return confirm('Yakin hapus item ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-500 hover:text-red-600" title="Hapus">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+
                         <td class="p-4">
                             @if ($item->image)
                                 <img src="{{ asset('storage/' . $item->image) }}"
@@ -86,21 +104,9 @@
                             @endif
                         </td>
                         <td class="p-4 text-slate-700">Rp {{ number_format($item->price, 0, ',', '.') }}</td>
-                        <td class="p-4">
-                            <div class="flex items-center gap-3">
-                                <a href="{{ route('item.edit', $item) }}"
-                                   class="text-amber-500 hover:text-amber-600" title="Edit">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </a>
-                                <form method="POST" action="{{ route('item.destroy', $item) }}"
-                                      onsubmit="return confirm('Yakin hapus item ini?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-500 hover:text-red-600" title="Hapus">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
+                        <td class="p-4 text-slate-650">
+                            {{ $item->updatedBy->name ?? $item->createdBy->name ?? '-' }}<br>
+                            <small>{{ $item->updated_at?->setTimezone('Asia/Jakarta')->format('d/m/Y H:i') }} WIB</small>
                         </td>
                     </tr>
                 @empty

@@ -6,12 +6,13 @@ use App\Models\Category;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
     public function index(Request $request)
     {
-        $items = Item::with('category')
+        $items = Item::with(['category', 'createdBy', 'updatedBy'])
         ->when($request->filled('search'), function ($query) use ($request) {
             $query->where('item_name', 'like', '%' . $request->search . '%');
         })
@@ -47,6 +48,7 @@ class ItemController extends Controller
             $validated['image'] = $request->file('image')->store('items', 'public');
         }
 
+        $validated['created_by'] = Auth::id();
         Item::create($validated);
 
         return redirect()->route('item.index')->with('success', 'Item berhasil ditambahkan.');
@@ -75,6 +77,9 @@ class ItemController extends Controller
             }
             $validated['image'] = $request->file('image')->store('items', 'public');
         }
+
+        $validated['created_by'] = Auth::id();
+        $validated['updated_by'] = Auth::id();
 
         $item->update($validated);
 
